@@ -4,6 +4,8 @@ using vega.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 // Add services to the container.
 builder.Services.AddDbContext<VegaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
