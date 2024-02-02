@@ -1,7 +1,7 @@
-import { Model } from "./ModelViewModel";
+import { ModelViewModel } from "./ModelViewModel";
 
-export class Make {
+export class MakeViewModel {
     id!: number;
     name!: string;
-    models!: Model[];
+    models!: ModelViewModel[];
 }

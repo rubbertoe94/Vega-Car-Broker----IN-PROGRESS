@@ -12,7 +12,19 @@ builder.Services.AddDbContext<VegaDbContext>(options =>
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("https://localhost:44494")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
+
+
 var app = builder.Build();
+
+app.UseCors("AllowSpecificOrigin");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
