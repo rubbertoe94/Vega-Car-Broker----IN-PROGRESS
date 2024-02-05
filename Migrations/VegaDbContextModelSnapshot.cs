@@ -35,7 +35,7 @@ namespace vega.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Makes");
+                    b.ToTable("Makes", (string)null);
                 });
 
             modelBuilder.Entity("vega.Models.Model", b =>
@@ -57,7 +57,7 @@ namespace vega.Migrations
 
                     b.HasIndex("MakeId");
 
-                    b.ToTable("Models");
+                    b.ToTable("Models", (string)null);
                 });
 
             modelBuilder.Entity("vega.Models.Model", b =>

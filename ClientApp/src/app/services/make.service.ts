@@ -8,12 +8,16 @@ import { MakeViewModel } from '../models/MakeViewModel';
   providedIn: 'root'
 })
 export class MakeService {
+baseUrl: string = "https://localhost:7220/api";
 
   constructor(private http: HttpClient) { }
 
 
 getMakes(): Observable<any> {
-  return this.http.get<any>('/api/makes');
+  let endpointUrl = this.baseUrl + '/makes';
+  return this.http.get<any>(endpointUrl);
 }
+
+
 
 }

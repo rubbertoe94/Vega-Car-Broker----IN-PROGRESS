@@ -16,7 +16,7 @@ ngOnInit() {
   this.makeService.getMakes().subscribe(makes => {
     this.makes = makes;
   })
-  console.log(this.makes)
+  console.log("makes: ", this.makes)
 }
 
 
