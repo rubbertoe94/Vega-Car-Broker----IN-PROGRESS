@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgModule, Component } from '@angular/core';
+
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -10,7 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
-import { MakeService } from './services/make.service';
+import { VehicleService } from './services/vehicle.service';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { MakeService } from './services/make.service';
       { path: '**', redirectTo: 'home' }
     ])
   ],
-  providers: [MakeService],
+  providers: [VehicleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

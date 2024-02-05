@@ -7,7 +7,7 @@ import { MakeViewModel } from '../models/MakeViewModel';
 @Injectable({
   providedIn: 'root'
 })
-export class MakeService {
+export class VehicleService {
 baseUrl: string = "https://localhost:7220/api";
 
   constructor(private http: HttpClient) { }
@@ -18,6 +18,9 @@ getMakes(): Observable<any> {
   return this.http.get<any>(endpointUrl);
 }
 
-
+getFeatures(): Observable<any> {
+  let endpointUrl = this.baseUrl + '/features';
+  return this.http.get<any>(endpointUrl);
+}
 
 }

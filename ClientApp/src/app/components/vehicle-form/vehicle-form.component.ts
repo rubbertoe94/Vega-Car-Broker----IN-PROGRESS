@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MakeService } from 'src/app/services/make.service';
+import { VehicleService } from 'src/app/services/vehicle.service';
 import { MakeViewModel } from 'src/app/models/MakeViewModel';
 
 @Component({
@@ -8,15 +8,34 @@ import { MakeViewModel } from 'src/app/models/MakeViewModel';
   styleUrls: ['./vehicle-form.component.css']
 })
 export class VehicleFormComponent {
-makes: MakeViewModel[] = [];
+makes!: any[];
+vehicle: any = {};
+models!: any[];
+features: any[] = [
+  {id: 1,
+  name: "Feature1"}, 
+  {id: 2,
+  name: "Feature2"},
+  {id: 3,
+  name: "Feature3"}
+];
 
-constructor(private makeService: MakeService) {}
+constructor(
+  private vehicleService: VehicleService) {}
 
 ngOnInit() {
-  this.makeService.getMakes().subscribe(makes => {
-    this.makes = makes;
+  this.vehicleService.getMakes().subscribe(result => {
+    this.makes = result;
   })
-  console.log("makes: ", this.makes)
+
+  // this.makeService.getFeatures().subscribe(result => {
+  //   this.features = result;
+  // })
+}
+
+onMakeChange() {
+var selectedMake = this.makes.find(m => m.id == this.vehicle.make);
+this.models = selectedMake ? selectedMake.models : [];
 }
 
 

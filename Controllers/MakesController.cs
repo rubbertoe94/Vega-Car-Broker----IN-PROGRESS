@@ -1,6 +1,6 @@
-using System.Data.Entity;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using vega.Models;
 using vega.Models.ViewModels;
 using vega.Persistence;
