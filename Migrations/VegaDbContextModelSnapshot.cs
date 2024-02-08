@@ -36,7 +36,7 @@ namespace vega.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Features");
+                    b.ToTable("Features", (string)null);
                 });
 
             modelBuilder.Entity("vega.Models.Make", b =>
@@ -53,7 +53,7 @@ namespace vega.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Makes");
+                    b.ToTable("Makes", (string)null);
                 });
 
             modelBuilder.Entity("vega.Models.Model", b =>
@@ -75,7 +75,7 @@ namespace vega.Migrations
 
                     b.HasIndex("MakeId");
 
-                    b.ToTable("Models");
+                    b.ToTable("Models", (string)null);
                 });
 
             modelBuilder.Entity("vega.Models.Vehicle", b =>
@@ -114,7 +114,7 @@ namespace vega.Migrations
 
                     b.HasIndex("ModelId");
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicles", (string)null);
                 });
 
             modelBuilder.Entity("vega.Models.VehicleFeature", b =>
@@ -137,7 +137,7 @@ namespace vega.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("VehicleFeatures");
+                    b.ToTable("VehicleFeatures", (string)null);
                 });
 
             modelBuilder.Entity("vega.Models.Model", b =>

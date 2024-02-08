@@ -1,5 +1,6 @@
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using vega.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,12 +13,21 @@ builder.Services.AddDbContext<VegaDbContext>(options =>
 
 builder.Services.AddControllersWithViews();
 
+// builder.Services.AddControllers().AddJsonOptions(x =>
+//     x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("https://localhost:44494")
+        builder => builder.WithOrigins("https://localhost:44494", "https://localhost:7220", "http://localhost:5008")
                           .AllowAnyMethod()
                           .AllowAnyHeader());
+});
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 });
 
 
@@ -26,22 +36,23 @@ var app = builder.Build();
 
 app.UseCors("AllowSpecificOrigin");
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Place Swagger before UseRouting.
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
+
 app.UseRouting();
 
+app.UseAuthorization(); // Add this if you have [Authorize] attributes.
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
+// The Swagger UI is now configured before MapFallbackToFile
+// so it shouldn't be caught by the fallback route.
 app.MapFallbackToFile("index.html");
 
 app.Run();

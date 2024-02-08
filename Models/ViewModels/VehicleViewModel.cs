@@ -1,4 +1,7 @@
-﻿namespace vega.Models.ViewModels
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace vega.Models.ViewModels
 {
     public class VehicleViewModel
     {
@@ -6,9 +9,10 @@
         public int ModelId { get; set; }
         public bool IsRegistered { get; set; }
 
-       
-        public DateTime LastUpdated { get; set; }
+        [Required]
+        public ContactViewModel Contact { get; set; }
+        public ICollection<int> Features { get; set; }
 
-        public ICollection<VehicleFeature> Features { get; set; }
+      
     }
 }
