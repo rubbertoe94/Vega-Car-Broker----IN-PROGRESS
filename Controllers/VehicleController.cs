@@ -61,5 +61,37 @@ namespace vega.Controllers
             }
             return NotFound();
         }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVehicle(int id)
+        {
+            var vehicle = await context.Vehicles.FindAsync(id);
+
+            if (vehicle == null) 
+            {
+                return NotFound();
+            }
+
+            context.Vehicles.Remove(vehicle);
+            await context.SaveChangesAsync();
+            return Ok(id);
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVehicle(int id) 
+        {
+            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
+
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            var mappedResult = mapper.Map<Vehicle, VehicleViewModel>(vehicle);
+            return Ok(mappedResult);
+        }
+
     }
 }

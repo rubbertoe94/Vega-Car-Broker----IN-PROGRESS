@@ -29,21 +29,18 @@ namespace vega.Models.ViewModels
                 .ForMember(v => v.Features, opt => opt.Ignore())
                 .AfterMap((vvm, v) => {
                     //remove unselected features
-                    var removedFeatures = new List<VehicleFeature>();
-                    foreach(var f in v.Features) {
-                        if (!vvm.Features.Contains(f.FeatureId)) {
-                            removedFeatures.Add(f);
-                        }
-                    }
-                    foreach(var f in removedFeatures) {
+                    var removedFeatures = v.Features.Where(f => !vvm.Features.Contains(f.FeatureId)).ToList();
+                    foreach(var f in removedFeatures) 
+                    {
                         v.Features.Remove(f);
                     }
 
+
                     //add new features
-                    foreach(var id in vvm.Features) {
-                        if (!v.Features.Any(f => f.FeatureId == id)) {
-                            v.Features.Add(new VehicleFeature {FeatureId = id});
-                        }
+                   var addedFeatures = vvm.Features.Where(id => !v.Features.Any(f => f.FeatureId == id)).Select(id => new VehicleFeature { FeatureId = id}).ToList();
+                    foreach(var f in addedFeatures) 
+                    {
+                        v.Features.Add(f);
                     }
                 });
 
