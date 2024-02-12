@@ -26,8 +26,6 @@ namespace vega.Controllers
                 .Include(m => m.Models)
                 .ToList();
 
-            Console.WriteLine("makes object on server: ", makes);
-
             return mapper.Map<IEnumerable<MakeViewModel>>(makes);
         }
     }

@@ -20,24 +20,24 @@ namespace vega.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] VehicleViewModel vehicleViewModel) 
+        public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleViewModel vehicleViewModel) 
         { 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-           var vehicle = mapper.Map<VehicleViewModel, Vehicle>(vehicleViewModel);
+           var vehicle = mapper.Map<SaveVehicleViewModel, Vehicle>(vehicleViewModel);
             vehicle.LastUpdated = DateTime.Now;
 
             context.Vehicles.Add(vehicle);
             await context.SaveChangesAsync();
-            var result = mapper.Map<Vehicle, VehicleViewModel>(vehicle);
+            var result = mapper.Map<Vehicle, SaveVehicleViewModel>(vehicle);
             return Ok(result);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehicleViewModel vehicleViewModel) 
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleViewModel vehicleViewModel) 
         { 
             if (!ModelState.IsValid)
             {
@@ -48,11 +48,11 @@ namespace vega.Controllers
 
            if (vehicle != null) {
                 try {
-                    mapper.Map<VehicleViewModel, Vehicle>(vehicleViewModel, vehicle);
+                    mapper.Map<SaveVehicleViewModel, Vehicle>(vehicleViewModel, vehicle);
                     vehicle.LastUpdated = DateTime.Now;
 
                     await context.SaveChangesAsync();
-                    var result = mapper.Map<Vehicle, VehicleViewModel>(vehicle);
+                    var result = mapper.Map<Vehicle, SaveVehicleViewModel>(vehicle);
                     return Ok(result);
                 }
                 catch (Exception ex) {
@@ -89,7 +89,7 @@ namespace vega.Controllers
                 return NotFound();
             }
 
-            var mappedResult = mapper.Map<Vehicle, VehicleViewModel>(vehicle);
+            var mappedResult = mapper.Map<Vehicle, DisplayVehicleViewModel>(vehicle);
             return Ok(mappedResult);
         }
 
