@@ -19,7 +19,8 @@ namespace vega.Models.ViewModels
 
             CreateMap<Vehicle, DisplayVehicleViewModel>()
                 .ForMember(vvm => vvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
-                .ForMember(vvm => vvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => new FeatureViewModel { Id = vf.FeatureId, Name = vf.Feature.Name})));
+                .ForMember(vvm => vvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => new FeatureViewModel { Id = vf.FeatureId, Name = vf.Feature.Name })))
+                .ForMember(vvm => vvm.Make, opt => opt.MapFrom(v => v.Model.Make));
 
             CreateMap<Vehicle, SaveVehicleViewModel>()
                 .ForMember(vvm => vvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
