@@ -20,16 +20,16 @@ namespace vega.Models.ViewModels
     public class DisplayVehicleViewModel
     {
         public int Id { get; set; }
-        public ModelViewModel Model { get; set; }
-        public MakeViewModel Make { get; set; }
+        public KeyValuePairViewModel Model { get; set; }
+        public KeyValuePairViewModel Make { get; set; }
         public bool IsRegistered { get; set; }
         public ContactViewModel Contact { get; set; }
         public DateTime LastUpdated { get; set; }
-        public ICollection<FeatureViewModel> Features { get; set; }
+        public ICollection<KeyValuePairViewModel> Features { get; set; }
 
         public DisplayVehicleViewModel() 
         {
-            Features = new Collection<FeatureViewModel>();
+            Features = new Collection<KeyValuePairViewModel>();
         }
     }
 }

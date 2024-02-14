@@ -9,22 +9,20 @@ namespace vega.Models.ViewModels
         {
             CreateMap<Make, MakeViewModel>()
                 .ReverseMap();
-            CreateMap<MakeViewModel, ModelViewModel>()
+            CreateMap<Make, KeyValuePairViewModel>()
                 .ReverseMap();
 
-            CreateMap<Model, ModelViewModel>()
-                .ReverseMap();
-            CreateMap<ModelViewModel, MakeViewModel>()
+            CreateMap<Model, KeyValuePairViewModel>()
                 .ReverseMap();
 
             CreateMap<Vehicle, DisplayVehicleViewModel>()
-                .ForMember(vvm => vvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
-                .ForMember(vvm => vvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => new FeatureViewModel { Id = vf.FeatureId, Name = vf.Feature.Name })))
-                .ForMember(vvm => vvm.Make, opt => opt.MapFrom(v => v.Model.Make));
+                .ForMember(dvvm => dvvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
+                .ForMember(dvvm => dvvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => new KeyValuePairViewModel { Id = vf.FeatureId, Name = vf.Feature.Name })))
+                .ForMember(dvvm => dvvm.Make, opt => opt.MapFrom(v => v.Model.Make));
 
             CreateMap<Vehicle, SaveVehicleViewModel>()
-                .ForMember(vvm => vvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
-                .ForMember(vvm => vvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => vf.FeatureId)));
+                .ForMember(svvm => svvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
+                .ForMember(svvm => svvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => vf.FeatureId)));
 
             CreateMap<SaveVehicleViewModel, Vehicle>()
                 .ForMember(v => v.Id, opt => opt.Ignore())
@@ -49,7 +47,7 @@ namespace vega.Models.ViewModels
                     }
                 });
 
-            CreateMap<VehicleFeature, FeatureViewModel>()
+            CreateMap<VehicleFeature, KeyValuePairViewModel>()
                 .ReverseMap();
         }
     }

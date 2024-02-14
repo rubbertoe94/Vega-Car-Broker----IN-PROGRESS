@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using vega.Models;
 using vega.Models.ViewModels;
 using vega.Persistence;
+using vega.ViewModels;
 
 namespace vega.Controllers
 {
@@ -20,10 +21,10 @@ namespace vega.Controllers
 
 
         [HttpGet("/api/models")]
-        public async Task<IEnumerable<ModelViewModel>> GetModels()
+        public async Task<IEnumerable<KeyValuePairViewModel>> GetModels()
         {
             var models = await context.Models.ToListAsync();
-            return mapper.Map<List<ModelViewModel>>(models);
+            return mapper.Map<List<KeyValuePairViewModel>>(models);
         }
     }
 }
