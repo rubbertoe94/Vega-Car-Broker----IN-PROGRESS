@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using vega.Models;
 using vega.Models.ViewModels;
+using vega.Pages.Persistence.Interfaces;
 using vega.Persistence;
 
 namespace vega.Controllers
@@ -12,11 +13,13 @@ namespace vega.Controllers
     {
         private readonly IMapper mapper;
         private readonly VegaDbContext context;
+        private readonly IVehicleRepository repository;
 
-        public VehicleController(IMapper mapper, VegaDbContext context) 
+        public VehicleController(IMapper mapper, VegaDbContext context, IVehicleRepository repository) 
         {
             this.mapper = mapper;
             this.context = context;
+            this.repository = repository;
         }
 
         [HttpPost]
@@ -32,27 +35,30 @@ namespace vega.Controllers
 
             context.Vehicles.Add(vehicle);
             await context.SaveChangesAsync();
-            var result = mapper.Map<Vehicle, SaveVehicleViewModel>(vehicle);
+
+            vehicle = await repository.GetVehicle(vehicle.Id);
+
+            var result = mapper.Map<Vehicle, VehicleViewModel>(vehicle!);
             return Ok(result);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleViewModel vehicleViewModel) 
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleViewModel data) 
         { 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-           var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
+            var vehicle = await repository.GetVehicle(id);
 
-           if (vehicle != null) {
+            if (vehicle != null) {
                 try {
-                    mapper.Map<SaveVehicleViewModel, Vehicle>(vehicleViewModel, vehicle);
+                    mapper.Map<SaveVehicleViewModel, Vehicle>(data, vehicle);
                     vehicle.LastUpdated = DateTime.Now;
 
                     await context.SaveChangesAsync();
-                    var result = mapper.Map<Vehicle, SaveVehicleViewModel>(vehicle);
+                    var result = mapper.Map<Vehicle, VehicleViewModel>(vehicle);
                     return Ok(result);
                 }
                 catch (Exception ex) {
@@ -82,19 +88,14 @@ namespace vega.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle(int id) 
         {
-            var vehicle = await context.Vehicles
-                .Include(v => v.Features)
-                    .ThenInclude(vf => vf.Feature)
-                .Include(v => v.Model)
-                    .ThenInclude(m => m.Make)
-                .SingleOrDefaultAsync(v => v.Id == id);
+            var vehicle = await repository.GetVehicle(id);
 
             if (vehicle == null)
             {
                 return NotFound();
             }
 
-            var mappedResult = mapper.Map<Vehicle, DisplayVehicleViewModel>(vehicle);
+            var mappedResult = mapper.Map<Vehicle, VehicleViewModel>(vehicle);
             return Ok(mappedResult);
         }
 

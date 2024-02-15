@@ -1,11 +1,15 @@
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using vega.Pages.Persistence;
+using vega.Pages.Persistence.Interfaces;
 using vega.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 // Add services to the container.
 builder.Services.AddDbContext<VegaDbContext>(options =>

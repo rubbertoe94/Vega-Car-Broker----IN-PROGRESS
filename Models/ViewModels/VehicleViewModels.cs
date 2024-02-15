@@ -17,7 +17,7 @@ namespace vega.Models.ViewModels
       
     }
 
-    public class DisplayVehicleViewModel
+    public class VehicleViewModel
     {
         public int Id { get; set; }
         public KeyValuePairViewModel Model { get; set; }
@@ -27,7 +27,7 @@ namespace vega.Models.ViewModels
         public DateTime LastUpdated { get; set; }
         public ICollection<KeyValuePairViewModel> Features { get; set; }
 
-        public DisplayVehicleViewModel() 
+        public VehicleViewModel() 
         {
             Features = new Collection<KeyValuePairViewModel>();
         }
