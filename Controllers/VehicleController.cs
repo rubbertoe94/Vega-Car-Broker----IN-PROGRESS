@@ -12,14 +12,15 @@ namespace vega.Controllers
     public class VehicleController : Controller
     {
         private readonly IMapper mapper;
-        private readonly VegaDbContext context;
+        
         private readonly IVehicleRepository repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public VehicleController(IMapper mapper, VegaDbContext context, IVehicleRepository repository) 
+        public VehicleController(IMapper mapper, IVehicleRepository repository, IUnitOfWork unitOfWork) 
         {
             this.mapper = mapper;
-            this.context = context;
             this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -33,8 +34,8 @@ namespace vega.Controllers
            var vehicle = mapper.Map<SaveVehicleViewModel, Vehicle>(vehicleViewModel);
             vehicle.LastUpdated = DateTime.Now;
 
-            context.Vehicles.Add(vehicle);
-            await context.SaveChangesAsync();
+            repository.Add(vehicle);
+            await unitOfWork.CompleteAsync();
 
             vehicle = await repository.GetVehicle(vehicle.Id);
 
@@ -54,11 +55,11 @@ namespace vega.Controllers
 
             if (vehicle != null) {
                 try {
-                    mapper.Map<SaveVehicleViewModel, Vehicle>(data, vehicle);
+                    mapper.Map<Vehicle>(data);
                     vehicle.LastUpdated = DateTime.Now;
 
-                    await context.SaveChangesAsync();
-                    var result = mapper.Map<Vehicle, VehicleViewModel>(vehicle);
+                    await unitOfWork.CompleteAsync();
+                    var result = mapper.Map<VehicleViewModel>(vehicle);
                     return Ok(result);
                 }
                 catch (Exception ex) {
@@ -72,15 +73,15 @@ namespace vega.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
-            var vehicle = await context.Vehicles.FindAsync(id);
+            var vehicle = await repository.GetVehicle(id, includeRelated: false);
 
             if (vehicle == null) 
             {
                 return NotFound();
             }
 
-            context.Vehicles.Remove(vehicle);
-            await context.SaveChangesAsync();
+            repository.Remove(vehicle);
+            await unitOfWork.CompleteAsync();
             return Ok(id);
         }
 
