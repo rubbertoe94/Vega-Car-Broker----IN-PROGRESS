@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using vega.Models;
 using vega.Models.ViewModels;
 using vega.Pages.Persistence.Interfaces;
@@ -100,5 +101,12 @@ namespace vega.Controllers
             return Ok(mappedResult);
         }
 
+        [HttpGet("allVehicles")]
+        public async Task<IActionResult> GetAllVehicles() 
+        {
+            var vehicles = await repository.GetAllVehicles();
+            var mappedResults = mapper.Map<IEnumerable<VehicleViewModel>>(vehicles);
+            return Ok(mappedResults);
+        }
     }
 }

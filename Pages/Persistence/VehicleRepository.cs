@@ -27,6 +27,17 @@ namespace vega.Pages.Persistence
                  .SingleOrDefaultAsync(v => v.Id == id);
         }
 
+        public async Task<IEnumerable<Vehicle>> GetAllVehicles() 
+        {
+            return await context.Vehicles
+                .Include(v => v.Features)
+                     .ThenInclude(vf => vf.Feature)
+                 .Include(v => v.Model)
+                     .ThenInclude(m => m.Make)
+                     .OrderBy(v => v.Id)
+                     .ToListAsync();
+        }
+
         public void Add(Vehicle vehicle) 
         {
             context.Vehicles.Add(vehicle);
