@@ -1,6 +1,7 @@
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using vega.Core.Interfaces;
 using vega.Pages.Persistence;
 using vega.Pages.Persistence.Interfaces;
 using vega.Persistence;

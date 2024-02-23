@@ -1,4 +1,4 @@
-﻿namespace vega.Pages.Persistence.Interfaces
+﻿namespace vega.Core.Interfaces
 {
 
     public interface IUnitOfWork

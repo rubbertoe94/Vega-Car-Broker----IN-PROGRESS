@@ -1,4 +1,5 @@
-﻿using vega.Persistence;
+﻿using vega.Core.Interfaces;
+using vega.Persistence;
 
 namespace vega.Pages.Persistence.Interfaces
 {

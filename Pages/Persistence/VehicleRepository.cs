@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using vega.Core.Interfaces;
 using vega.Models;
 using vega.Pages.Persistence.Interfaces;
 using vega.Persistence;
@@ -36,6 +37,13 @@ namespace vega.Pages.Persistence
                      .ThenInclude(m => m.Make)
                      .OrderBy(v => v.Id)
                      .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Feature>> GetAllFeatures()
+        {
+            return await context.Features
+                .OrderBy(f => f.Id)
+                .ToListAsync();
         }
 
         public void Add(Vehicle vehicle) 

@@ -11,14 +11,7 @@ export class VehicleFormComponent {
 makes!: any[];
 vehicle: any = {};
 models!: any[];
-features: any[] = [
-  {id: 1,
-  name: "Feature1"}, 
-  {id: 2,
-  name: "Feature2"},
-  {id: 3,
-  name: "Feature3"}
-];
+features!: any[];
 
 constructor(
   private vehicleService: VehicleService) {}
@@ -28,14 +21,15 @@ ngOnInit() {
     this.makes = result;
   })
 
-  // this.makeService.getFeatures().subscribe(result => {
-  //   this.features = result;
-  // })
+  this.vehicleService.getFeatures().subscribe(result => {
+    this.features = result;
+  })
 }
 
 onMakeChange() {
-var selectedMake = this.makes.find(m => m.id == this.vehicle.make);
+var selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
 this.models = selectedMake ? selectedMake.models : [];
+delete this.vehicle.modelId;
 }
 
 

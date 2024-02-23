@@ -19,7 +19,7 @@ getMakes(): Observable<any> {
 }
 
 getFeatures(): Observable<any> {
-  let endpointUrl = this.baseUrl + '/features';
+  let endpointUrl = this.baseUrl + '/vehicles/features';
   return this.http.get<any>(endpointUrl);
 }
 
