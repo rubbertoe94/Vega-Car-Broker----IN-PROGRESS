@@ -9,9 +9,11 @@ import { MakeViewModel } from 'src/app/models/MakeViewModel';
 })
 export class VehicleFormComponent {
 makes!: any[];
-vehicle: any = {};
 models!: any[];
 features!: any[];
+vehicle: any = {
+  features: []
+};
 
 constructor(
   private vehicleService: VehicleService) {}
@@ -31,6 +33,19 @@ var selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
 this.models = selectedMake ? selectedMake.models : [];
 delete this.vehicle.modelId;
 }
+
+onFeatureToggle(featureId: number, $event: Event) {
+  //tells angular that 'checked' is a property of target
+  const target = $event.target as HTMLInputElement | null;
+  
+  if (target && target.checked) {
+    this.vehicle.features.push(featureId);
+  } else {
+    var index = this.vehicle.features.indexOf(featureId);
+    this.vehicle.features.splice(index, 1);
+  }
+}
+
 
 
 }
