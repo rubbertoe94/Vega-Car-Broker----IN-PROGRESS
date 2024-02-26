@@ -72,11 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "vega:build:production"
             },
             "development": {
-              "proxyConfig": "proxy.conf.js",
-              "buildTarget": "vega:build:development"
+              "proxyConfig": "proxy.conf.js"
+
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "vega:build"
+
           }
         },
         "test": {
@@ -117,8 +116,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": true
+              "vendorChunk": true
             },
             "production": {
               "optimization": true,
@@ -126,8 +124,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "vendorChunk": false
             }
           }
         }
