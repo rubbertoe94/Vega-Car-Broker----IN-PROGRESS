@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { MakeViewModel } from 'src/app/models/MakeViewModel';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -12,13 +13,17 @@ makes!: any[];
 models!: any[];
 features!: any[];
 vehicle: any = {
-  features: []
+  features: [],
+  contact: {}
 };
 
 constructor(
-  private vehicleService: VehicleService) {}
+  private vehicleService: VehicleService,
+  private toastr: ToastrService
+  ) {}
 
 ngOnInit() {
+  this.toastr.success('NgOnInit', 'Test');
   this.vehicleService.getMakes().subscribe(result => {
     this.makes = result;
   })
@@ -46,7 +51,19 @@ onFeatureToggle(featureId: number, $event: Event) {
   }
 }
 
+submit() {
+  console.log(this.vehicle);
+  this.vehicleService.create(this.vehicle)
+    .subscribe(
+      response => console.log(response),
+      err => this.toastr.error('An unexpected error happened', 'Error')
+    );
+}
 
+test() {
+  console.log("test button clicked");
+  this.toastr.success('This is a test', 'Test');
+}
 
 }
 

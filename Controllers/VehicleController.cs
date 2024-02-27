@@ -28,6 +28,7 @@ namespace vega.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleViewModel vehicleViewModel) 
         { 
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -44,6 +45,7 @@ namespace vega.Controllers
             var result = mapper.Map<Vehicle, VehicleViewModel>(vehicle!);
             return Ok(result);
         }
+
 
         [HttpPut]
         public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleViewModel data) 
