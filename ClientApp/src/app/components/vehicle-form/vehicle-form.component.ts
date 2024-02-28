@@ -23,7 +23,6 @@ constructor(
   ) {}
 
 ngOnInit() {
-  this.toastr.success('NgOnInit', 'Test');
   this.vehicleService.getMakes().subscribe(result => {
     this.makes = result;
   })
@@ -56,14 +55,11 @@ submit() {
   this.vehicleService.create(this.vehicle)
     .subscribe(
       response => console.log(response),
-      err => this.toastr.error('An unexpected error happened', 'Error')
+      (error) => this.toastr.error('An unexpected error happened', 'Error')
     );
 }
 
-test() {
-  console.log("test button clicked");
-  this.toastr.success('This is a test', 'Test');
-}
+
 
 }
 

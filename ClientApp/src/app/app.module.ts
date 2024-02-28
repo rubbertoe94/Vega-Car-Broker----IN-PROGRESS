@@ -34,12 +34,8 @@ import { VehicleService } from './services/vehicle.service';
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
-      closeButton: true,
-      progressBar: true,
+      timeOut: 5000,
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-      toastClass: 'toast bootstrap-toast',
     }),
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
