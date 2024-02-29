@@ -28,4 +28,9 @@ create(vehicle: any): Observable<any> {
   return this.http.post<any>(endpointUrl, vehicle);
 }
 
+getVehicle(id: number): Observable<any> {
+  let endpointUrl = this.baseUrl + '/vehicles/' + id;
+  return this.http.get<any>(endpointUrl);
+}
+
 }
