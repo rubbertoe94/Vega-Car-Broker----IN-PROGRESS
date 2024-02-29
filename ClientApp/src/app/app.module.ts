@@ -1,7 +1,7 @@
 
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, ErrorHandler } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -15,6 +15,8 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { VehicleService } from './services/vehicle.service';
+import { AppErrorHandler } from './app.error-handler';
+
 
 
 
@@ -46,7 +48,11 @@ import { VehicleService } from './services/vehicle.service';
       { path: '**', redirectTo: 'home' }
     ])
   ],
-  providers: [VehicleService],
+  providers: [
+    VehicleService, 
+  { provide: ErrorHandler, useClass: AppErrorHandler }
+],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

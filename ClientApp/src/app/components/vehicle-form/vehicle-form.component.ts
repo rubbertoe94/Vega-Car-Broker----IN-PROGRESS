@@ -53,10 +53,7 @@ onFeatureToggle(featureId: number, $event: Event) {
 submit() {
   console.log(this.vehicle);
   this.vehicleService.create(this.vehicle)
-    .subscribe(
-      response => console.log(response),
-      (error) => this.toastr.error('An unexpected error happened', 'Error')
-    );
+    .subscribe(response => console.log(response));
 }
 
 
