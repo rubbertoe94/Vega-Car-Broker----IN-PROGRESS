@@ -104,13 +104,14 @@ namespace vega.Controllers
             return Ok(mappedResult);
         }
 
+
         [HttpGet("allVehicles")]
-        public async Task<IActionResult> GetAllVehicles() 
+        public async Task<IEnumerable<VehicleViewModel>> GetAllVehicles() 
         {
             var vehicles = await repository.GetAllVehicles();
-            var mappedResults = mapper.Map<IEnumerable<VehicleViewModel>>(vehicles);
-            return Ok(mappedResults);
+            return mapper.Map<IEnumerable<VehicleViewModel>>(vehicles);
         }
+
 
         [HttpGet("features")]
         public async Task<IActionResult> GetAllFeatures()

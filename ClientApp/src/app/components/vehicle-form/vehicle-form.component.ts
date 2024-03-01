@@ -44,7 +44,7 @@ ngOnInit() {
 var sources = [
   this.vehicleService.getMakes(),
   this.vehicleService.getFeatures(),];
-
+//rather than having a bunch of separate subscribe calls, I am using forkJoin to combine them into one
   if (this.vehicle.id)
     sources.push(this.vehicleService.getVehicle(this.vehicle.id));
   

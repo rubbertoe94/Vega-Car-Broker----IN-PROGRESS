@@ -33,4 +33,9 @@ getVehicle(id: number): Observable<any> {
   return this.http.get<any>(endpointUrl);
 }
 
+getVehicles(): Observable<any> {
+  let endpointUrl = this.baseUrl + '/vehicles/allVehicles';
+  return this.http.get<any>(endpointUrl);
+}
+
 }

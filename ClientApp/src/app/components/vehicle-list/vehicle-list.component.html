@@ -1,0 +1,36 @@
+<h2>Vehicles</h2>
+
+<p>
+  <a [routerLink]="['/vehicles/new']" class="btn btn-primary">New Vehicle</a>
+</p>
+
+<div class="form-group custom-card">
+    <label for="make">Make</label>
+    <select name="make" id="make" class="form-control custom-select" [(ngModel)]="filter.makeId" (change)="onFilterChange()">
+        <option value=""></option>
+        <option *ngFor="let make of makes" value="make.id">{{ make.name }}</option>
+    </select>
+</div>
+
+<table style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Contact Name</th>
+      <th>View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Add your vehicle data here -->
+    <tr *ngFor="let vehicle of vehicles">
+      <td>{{vehicle.id}}</td>
+      <td>{{vehicle.make.name}}</td>
+      <td>{{vehicle.model.name}}</td>
+      <td>{{vehicle.contact.name}}</td>
+      <td><a href="/vehicles/{{vehicle.id}}">View</a></td>
+    </tr>
+    <!-- Add more vehicle rows as needed -->
+  </tbody>
+</table>

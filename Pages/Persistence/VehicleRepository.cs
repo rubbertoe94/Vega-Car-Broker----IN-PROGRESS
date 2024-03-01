@@ -32,11 +32,11 @@ namespace vega.Pages.Persistence
         {
             return await context.Vehicles
                 .Include(v => v.Features)
-                     .ThenInclude(vf => vf.Feature)
-                 .Include(v => v.Model)
-                     .ThenInclude(m => m.Make)
-                     .OrderBy(v => v.Id)
-                     .ToListAsync();
+                    .ThenInclude(vf => vf.Feature)
+                .Include(v => v.Model)
+                    .ThenInclude(m => m.Make)
+                .OrderBy(v => v.Id)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Feature>> GetAllFeatures()
