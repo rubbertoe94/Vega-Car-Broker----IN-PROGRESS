@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using vega.Core.Interfaces;
+using vega.Core.Models;
 using vega.Models;
 using vega.Pages.Persistence.Interfaces;
 using vega.Persistence;
@@ -28,15 +29,21 @@ namespace vega.Pages.Persistence
                  .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAllVehicles() 
+        public async Task<IEnumerable<Vehicle>> GetAllVehicles(Filter filter) 
         {
-            return await context.Vehicles
+            var query = context.Vehicles
                 .Include(v => v.Features)
                     .ThenInclude(vf => vf.Feature)
                 .Include(v => v.Model)
                     .ThenInclude(m => m.Make)
                 .OrderBy(v => v.Id)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (filter.MakeId.HasValue)
+            {
+                query = query.Where(v => v.Model.MakeId == filter.MakeId.Value);
+            }
+            return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<Feature>> GetAllFeatures()

@@ -36,7 +36,7 @@ constructor(
   private vehicleService: VehicleService,
   private toastr: ToastrService) {
     route.params.subscribe(p => {
-      this.vehicle.id = +p['id'];
+      this.vehicle.id = +p['id'] || 0;
     });
   }
 
@@ -97,7 +97,10 @@ onFeatureToggle(featureId: number, $event: Event) {
 submit() {
   console.log(this.vehicle);
   this.vehicleService.create(this.vehicle)
-    .subscribe(x => console.log(x));
+    .subscribe(() => {
+      this.toastr.success('The vehicle was successfully created.', 'Success');
+      this.router.navigate(['/vehicles']);
+    });
 }
 
 

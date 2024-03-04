@@ -8,6 +8,7 @@ namespace vega.Models.ViewModels
     {
         public int Id { get; set; }
         public int ModelId { get; set; }
+        public int MakeId { get; set; }
         public bool IsRegistered { get; set; }
 
         [Required]

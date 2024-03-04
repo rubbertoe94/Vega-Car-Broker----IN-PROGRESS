@@ -4,13 +4,18 @@
   <a [routerLink]="['/vehicles/new']" class="btn btn-primary">New Vehicle</a>
 </p>
 
-<div class="form-group custom-card">
+<div class="custom-card">
+  <div class="form-group">
     <label for="make">Make</label>
     <select name="make" id="make" class="form-control custom-select" [(ngModel)]="filter.makeId" (change)="onFilterChange()">
         <option value=""></option>
-        <option *ngFor="let make of makes" value="make.id">{{ make.name }}</option>
+        <option *ngFor="let make of makes" [value]="make.id">{{ make.name }}</option>
     </select>
+  </div>
+  <button class="btn btn-default" (click)="resetFilter()">Reset</button>
 </div>
+
+
 
 <table style="width: 100%; border-collapse: collapse;">
   <thead>

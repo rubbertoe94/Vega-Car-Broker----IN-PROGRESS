@@ -7,6 +7,8 @@ using vega.Models;
 using vega.Models.ViewModels;
 using vega.Pages.Persistence.Interfaces;
 using vega.Core;
+using vega.Core.Models.ViewModels;
+using vega.Core.Models;
 
 namespace vega.Controllers
 {
@@ -26,7 +28,7 @@ namespace vega.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleViewModel vehicleViewModel) 
+        public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleViewModel newVehicle) 
         { 
 
             if (!ModelState.IsValid)
@@ -34,7 +36,7 @@ namespace vega.Controllers
                 return BadRequest(ModelState);
             }
 
-           var vehicle = mapper.Map<SaveVehicleViewModel, Vehicle>(vehicleViewModel);
+           var vehicle = mapper.Map<SaveVehicleViewModel, Vehicle>(newVehicle);
             vehicle.LastUpdated = DateTime.Now;
 
             repository.Add(vehicle);
@@ -106,9 +108,11 @@ namespace vega.Controllers
 
 
         [HttpGet("allVehicles")]
-        public async Task<IEnumerable<VehicleViewModel>> GetAllVehicles() 
+        public async Task<IEnumerable<VehicleViewModel>> GetAllVehicles(FilterViewModel filterResource) 
         {
-            var vehicles = await repository.GetAllVehicles();
+            var filter = mapper.Map<FilterViewModel, Filter>(filterResource);
+
+            var vehicles = await repository.GetAllVehicles(filter);
             return mapper.Map<IEnumerable<VehicleViewModel>>(vehicles);
         }
 

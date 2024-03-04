@@ -23,9 +23,9 @@ getFeatures(): Observable<any> {
   return this.http.get<any>(endpointUrl);
 }
 
-create(vehicle: any): Observable<any> {
+create(newVehicle: any): Observable<any> {
   let endpointUrl = this.baseUrl + '/vehicles';
-  return this.http.post<any>(endpointUrl, vehicle);
+  return this.http.post<any>(endpointUrl, newVehicle);
 }
 
 getVehicle(id: number): Observable<any> {

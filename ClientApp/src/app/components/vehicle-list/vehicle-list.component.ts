@@ -12,6 +12,7 @@ export class VehicleListComponent {
 vehicles!: VehicleViewModel[]; 
 makes!: KeyValuePair[];
 filter: any = {};
+allVehicles!: VehicleViewModel[];
 
 constructor(private vehicleService: VehicleService) { }
 
@@ -21,14 +22,22 @@ this.vehicleService.getMakes().subscribe(data => {
 });
 
   this.vehicleService.getVehicles().subscribe(data => {
-    this.vehicles = data;
+    this.vehicles = this.allVehicles = data;
   });
 } 
 
 onFilterChange() {
   //prepare to implement the filter
+  var vehicles = this.allVehicles;
+  if (this.filter.makeId) {
+  vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
+  }
+  this.vehicles = vehicles;
 }
 
-
+resetFilter() {
+  this.filter = {};
+  this.onFilterChange();
+}
 
 }

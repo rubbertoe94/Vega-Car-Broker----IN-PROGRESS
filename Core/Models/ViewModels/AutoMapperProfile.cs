@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using vega.Core.Models;
+using vega.Core.Models.ViewModels;
 using vega.ViewModels;
 
 namespace vega.Models.ViewModels
@@ -7,6 +9,8 @@ namespace vega.Models.ViewModels
     {
         public AutoMapperProfile() 
         {
+            //domain to api resource
+
             CreateMap<Make, MakeViewModel>()
                 .ReverseMap();
             CreateMap<Make, KeyValuePairViewModel>()
@@ -24,8 +28,19 @@ namespace vega.Models.ViewModels
                 .ForMember(svvm => svvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
                 .ForMember(svvm => svvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => vf.FeatureId)));
 
+            CreateMap<VehicleFeature, KeyValuePairViewModel>()
+                .ReverseMap();
+
+
+
+
+            //api resource to domain
+
+            CreateMap<FilterViewModel, Filter>()
+                .ReverseMap();
+
             CreateMap<SaveVehicleViewModel, Vehicle>()
-                .ForMember(v => v.Id, opt => opt.Ignore())
+                //.ForMember(v => v.Id, opt => opt.Ignore())
                 .ForMember(v => v.ContactName, opt => opt.MapFrom(vvm => vvm.Contact.Name))
                 .ForMember(v => v.ContactEmail, opt => opt.MapFrom(vvm => vvm.Contact.Email))
                 .ForMember(v => v.ContactPhone, opt => opt.MapFrom(vvm => vvm.Contact.Phone))
@@ -47,8 +62,7 @@ namespace vega.Models.ViewModels
                     }
                 });
 
-            CreateMap<VehicleFeature, KeyValuePairViewModel>()
-                .ReverseMap();
+            
         }
     }
 }
