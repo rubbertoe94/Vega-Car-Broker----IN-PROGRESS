@@ -4,11 +4,14 @@ import { Observable } from 'rxjs';
 import { MakeViewModel } from '../models/MakeViewModel';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
-baseUrl: string = "https://localhost:7220/api";
+private readonly baseUrl: string = "https://localhost:7220/api";
+private readonly vehicleEndpoint: string = this.baseUrl + "/vehicles";
+private readonly getVehiclesEndpoint: string = this.vehicleEndpoint + "/allVehicles";
 
   constructor(private http: HttpClient) { }
 
@@ -24,8 +27,7 @@ getFeatures(): Observable<any> {
 }
 
 create(newVehicle: any): Observable<any> {
-  let endpointUrl = this.baseUrl + '/vehicles';
-  return this.http.post<any>(endpointUrl, newVehicle);
+  return this.http.post<any>(this.vehicleEndpoint, newVehicle);
 }
 
 getVehicle(id: number): Observable<any> {
@@ -33,9 +35,21 @@ getVehicle(id: number): Observable<any> {
   return this.http.get<any>(endpointUrl);
 }
 
-getVehicles(): Observable<any> {
-  let endpointUrl = this.baseUrl + '/vehicles/allVehicles';
-  return this.http.get<any>(endpointUrl);
+getVehicles(filter: any): Observable<any> {
+  return this.http.get<any>(this.getVehiclesEndpoint + '?' + this.toQueryString(filter));
 }
+
+toQueryString(obj: any) {
+  var parts = [];
+  for (var property in obj) {
+    var value = obj[property];
+    if (value != null && value != undefined)
+      parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
+  }
+  return parts.join('&');
+}
+
+
+
 
 }

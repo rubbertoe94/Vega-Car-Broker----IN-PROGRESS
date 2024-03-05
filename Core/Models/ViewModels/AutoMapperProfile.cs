@@ -36,7 +36,7 @@ namespace vega.Models.ViewModels
 
             //api resource to domain
 
-            CreateMap<FilterViewModel, Filter>()
+            CreateMap<VehicleQueryViewModel, VehicleQuery>()
                 .ReverseMap();
 
             CreateMap<SaveVehicleViewModel, Vehicle>()

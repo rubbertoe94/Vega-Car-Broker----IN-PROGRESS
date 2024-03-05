@@ -12,7 +12,6 @@ export class VehicleListComponent {
 vehicles!: VehicleViewModel[]; 
 makes!: KeyValuePair[];
 filter: any = {};
-allVehicles!: VehicleViewModel[];
 
 constructor(private vehicleService: VehicleService) { }
 
@@ -20,19 +19,18 @@ ngOnInit() {
 this.vehicleService.getMakes().subscribe(data => {
   this.makes = data;
 });
-
-  this.vehicleService.getVehicles().subscribe(data => {
-    this.vehicles = this.allVehicles = data;
-  });
+this.populateVehicles();
 } 
 
+private populateVehicles() {
+  this.vehicleService.getVehicles(this.filter).subscribe(data => {
+    this.vehicles = data;
+  });
+
+}
+
 onFilterChange() {
-  //prepare to implement the filter
-  var vehicles = this.allVehicles;
-  if (this.filter.makeId) {
-  vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
-  }
-  this.vehicles = vehicles;
+ this.populateVehicles();
 }
 
 resetFilter() {
