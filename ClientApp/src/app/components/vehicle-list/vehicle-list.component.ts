@@ -11,7 +11,7 @@ import { KeyValuePair } from 'src/app/models/VehicleViewModels';
 export class VehicleListComponent {
 vehicles!: VehicleViewModel[]; 
 makes!: KeyValuePair[];
-filter: any = {};
+query: any = {};
 
 constructor(private vehicleService: VehicleService) { }
 
@@ -23,7 +23,7 @@ this.populateVehicles();
 } 
 
 private populateVehicles() {
-  this.vehicleService.getVehicles(this.filter).subscribe(data => {
+  this.vehicleService.getVehicles(this.query).subscribe(data => {
     this.vehicles = data;
   });
 
@@ -34,8 +34,20 @@ onFilterChange() {
 }
 
 resetFilter() {
-  this.filter = {};
+  this.query = {};
   this.onFilterChange();
 }
+
+sortBy(columnName: string) {
+  if (this.query.sortBy === columnName) {
+    this.query.isSortAscending = !this.query.isSortAscending;
+  } else {
+    this.query.sortBy = columnName;
+    this.query.isSortAscending = true;
+  }
+  this.populateVehicles();
+}
+
+
 
 }
