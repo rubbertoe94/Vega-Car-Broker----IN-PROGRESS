@@ -13,6 +13,7 @@ export class AppErrorHandler implements ErrorHandler {
         this.ngZone.run(() => {
             this.toastr = this.injector.get(ToastrService);
             this.toastr.error('An unexpected error happened', 'Error');
+            console.log('An unexpected error happened', error);
         });
         this.toastr = this.injector.get(ToastrService);
     }

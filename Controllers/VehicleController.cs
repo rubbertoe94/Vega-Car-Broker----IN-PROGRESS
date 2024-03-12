@@ -9,6 +9,7 @@ using vega.Pages.Persistence.Interfaces;
 using vega.Core;
 using vega.Core.Models.ViewModels;
 using vega.Core.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace vega.Controllers
 {
@@ -108,12 +109,21 @@ namespace vega.Controllers
 
 
         [HttpGet("allVehicles")]
-        public async Task<IEnumerable<VehicleViewModel>> GetAllVehicles(VehicleQueryViewModel filterResource) 
+        public async Task<IActionResult> GetAllVehicles(VehicleQueryViewModel filterResource) 
         {
             var filter = mapper.Map<VehicleQueryViewModel, VehicleQuery>(filterResource);
 
             var vehicles = await repository.GetAllVehicles(filter);
-            return mapper.Map<IEnumerable<VehicleViewModel>>(vehicles);
+
+            var result = new 
+            {
+                Page = filter.Page,
+                PageSize = filter.PageSize,
+                TotalItems = vehicles.Count(),
+                TotalPages = (int)Math.Ceiling(vehicles.Count() / (double)filter.PageSize),
+                Vehicles = mapper.Map<IEnumerable<VehicleViewModel>>(vehicles)
+            };
+            return Ok(result);
         }
 
 

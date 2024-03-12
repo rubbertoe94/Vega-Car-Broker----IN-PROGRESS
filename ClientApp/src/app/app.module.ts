@@ -7,7 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -16,7 +16,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { VehicleService } from './services/vehicle.service';
 import { AppErrorHandler } from './app.error-handler';
-import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -34,6 +35,7 @@ import { VehicleListComponent } from './components/vehicle-list/vehicle-list.com
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    NgxPaginationModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -42,11 +44,11 @@ import { VehicleListComponent } from './components/vehicle-list/vehicle-list.com
       positionClass: 'toast-bottom-right',
     }),
     RouterModule.forRoot([
-      { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
-      // { path: 'home', component: HomeComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'vehicles', component: VehicleListComponent },
+      { path: 'vehicles/all', component: VehicleListComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: VehicleFormComponent },
       { path: '**', redirectTo: 'home' }

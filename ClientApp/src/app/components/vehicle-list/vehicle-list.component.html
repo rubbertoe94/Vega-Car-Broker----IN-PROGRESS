@@ -36,7 +36,11 @@
   </thead>
   <tbody>
     <!-- Add your vehicle data here -->
-    <tr *ngFor="let vehicle of vehicles">
+    <tr *ngFor="let vehicle of vehicles | paginate: {
+      itemsPerPage: query.pageSize,
+      currentPage: query.page,
+      totalItems: totalVehicles
+    }">
       <td>{{vehicle.id}}</td>
       <td>{{vehicle.make.name}}</td>
       <td>{{vehicle.model.name}}</td>
@@ -46,3 +50,9 @@
     <!-- Add more vehicle rows as needed -->
   </tbody>
 </table>
+
+<pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="onPageChange($event)"
+></pagination-controls>
