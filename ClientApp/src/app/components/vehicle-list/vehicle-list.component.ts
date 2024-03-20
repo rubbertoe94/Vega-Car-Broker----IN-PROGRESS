@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { VehicleViewModel } from 'src/app/models/VehicleViewModels'; 
 import { KeyValuePair } from 'src/app/models/VehicleViewModels';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -14,10 +14,10 @@ vehicles!: VehicleViewModel[];
 makes!: KeyValuePair[];
 query: any = {
   page: 1,
-  pageSize: 10
+  pageSize: 2
 };
-totalVehicles: number = 0;
-totalPages: number = 0;
+totalVehicles!: number;
+totalPages!: number;
 
 
 
@@ -33,12 +33,15 @@ this.populateVehicles();
 private populateVehicles() {
   this.vehicleService.getVehicles(this.query).subscribe(data => {
     this.vehicles = data.vehicles;
-    this.totalVehicles = data.TotalItems;
-    this.totalPages = data.TotalPages
+    this.totalVehicles = data.totalItems;
+    this.totalPages = data.totalPages;
+
+  // console.log("vehicles: ", this.vehicles);
+  // console.log("totalItems: ", this.totalVehicles);
+  // console.log("totalPages: ", this.totalPages);
+  // console.log("query: ", this.query);
   });
-  console.log(this.vehicles);
-  console.log(this.totalVehicles);
-  console.log(this.totalPages);
+  
 }
 
 onFilterChange() {
@@ -46,7 +49,10 @@ onFilterChange() {
 }
 
 resetFilter() {
-  this.query = {};
+  this.query = {
+    page: this.query.page,
+    pageSize: this.query.pageSize
+  };
   this.onFilterChange();
 }
 
@@ -60,9 +66,15 @@ sortBy(columnName: string) {
   this.populateVehicles();
 }
 
-onPageChange(page: number) {
-  this.query.page = page;
+onPageChange(newPage: number) {
+  // console.log(`Changing to page ${newPage}`);
+  this.query.page = newPage;
+  // console.log(`Updated query: `, this.query);
   this.populateVehicles();
 }
 
+
+
 }
+
+

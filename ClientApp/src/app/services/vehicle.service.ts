@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MakeViewModel } from '../models/MakeViewModel';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 
 
@@ -36,7 +38,13 @@ getVehicle(id: number): Observable<any> {
 }
 
 getVehicles(filter: any): Observable<any> {
-  return this.http.get<any>(this.getVehiclesEndpoint + '?' + this.toQueryString(filter));
+  return this.http.get<any>(this.getVehiclesEndpoint + '?' + this.toQueryString(filter))
+    .pipe(
+      catchError(error => {
+        console.error('Error fetching vehicles', error);
+        return throwError(error);
+      })
+    );
 }
 
 toQueryString(obj: any) {

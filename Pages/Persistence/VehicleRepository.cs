@@ -33,7 +33,7 @@ namespace vega.Pages.Persistence
 
 
 
-        public async Task<IEnumerable<Vehicle>> GetAllVehicles(VehicleQuery queryObj) 
+        public async Task<(IEnumerable<Vehicle>, int totalCount)> GetAllVehicles(VehicleQuery queryObj) 
         {
             var query = context.Vehicles
                 .Include(v => v.Features)
@@ -48,6 +48,7 @@ namespace vega.Pages.Persistence
             if (queryObj.ModelId.HasValue)
                 query = query.Where(v => v.ModelId == queryObj.ModelId.Value);
 
+            int totalCount = await query.CountAsync();
             
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
             {
@@ -62,7 +63,8 @@ namespace vega.Pages.Persistence
             query = query.ApplyPaging(queryObj);
 
 
-            return await query.ToListAsync();
+            var vehicles = await query.ToListAsync();
+            return (vehicles, totalCount);
         }
 
 

@@ -113,15 +113,15 @@ namespace vega.Controllers
         {
             var filter = mapper.Map<VehicleQueryViewModel, VehicleQuery>(filterResource);
 
-            var vehicles = await repository.GetAllVehicles(filter);
+            var (vehicles, totalCount) = await repository.GetAllVehicles(filter);
 
             var result = new 
             {
-                Page = filter.Page,
-                PageSize = filter.PageSize,
-                TotalItems = vehicles.Count(),
-                TotalPages = (int)Math.Ceiling(vehicles.Count() / (double)filter.PageSize),
-                Vehicles = mapper.Map<IEnumerable<VehicleViewModel>>(vehicles)
+                page = filter.Page,
+                pageSize = filter.PageSize,
+                totalItems = totalCount,
+                totalPages = (int)Math.Ceiling((double)totalCount / filter.PageSize),
+                vehicles = mapper.Map<IEnumerable<VehicleViewModel>>(vehicles)
             };
             return Ok(result);
         }
