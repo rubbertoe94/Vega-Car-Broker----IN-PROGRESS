@@ -22,7 +22,8 @@ namespace vega.Models.ViewModels
             CreateMap<Vehicle, VehicleViewModel>()
                 .ForMember(vvm => vvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))
                 .ForMember(vvm => vvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => new KeyValuePairViewModel { Id = vf.FeatureId, Name = vf.Feature.Name })))
-                .ForMember(vvm => vvm.Make, opt => opt.MapFrom(v => v.Model.Make));
+                .ForMember(vvm => vvm.Make, opt => opt.MapFrom(v => v.Model.Make))
+                .ForMember(vvm => vvm.Features, opt => opt.MapFrom(v => v.Features.Select(vf => new KeyValuePairViewModel { Id = vf.FeatureId, Name = vf.Feature.Name })));
 
             CreateMap<Vehicle, SaveVehicleViewModel>()
                 .ForMember(svvm => svvm.Contact, opt => opt.MapFrom(v => new ContactViewModel { Name = v.ContactName, Email = v.ContactEmail, Phone = v.ContactPhone }))

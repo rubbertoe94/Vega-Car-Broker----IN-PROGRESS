@@ -10,6 +10,7 @@ namespace vega.Core.Interfaces
         Task<IEnumerable<Feature>> GetAllFeatures();
         void Add(Vehicle vehicle);
         void Remove(Vehicle vehicle);
+        void Update(Vehicle vehicle);
 
     }
 }

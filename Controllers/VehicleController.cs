@@ -50,7 +50,7 @@ namespace vega.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleViewModel data) 
         { 
             if (!ModelState.IsValid)
@@ -62,9 +62,10 @@ namespace vega.Controllers
 
             if (vehicle != null) {
                 try {
-                    mapper.Map<Vehicle>(data);
+                    mapper.Map(data, vehicle);
                     vehicle.LastUpdated = DateTime.Now;
 
+                    repository.Update(vehicle);
                     await unitOfWork.CompleteAsync();
                     var result = mapper.Map<VehicleViewModel>(vehicle);
                     return Ok(result);

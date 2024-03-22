@@ -29,13 +29,20 @@
         [class.fa-sort-desc]="!query.isSortAscending"></i>
       </th>
 
-      <th (click)="sortBy('model')">Model</th>
-      <th (click)="sortBy('contactName')">Contact Name</th>
+      <th (click)="sortBy('model')">Model<i *ngIf="query.sortBy === 'model'"
+        class="fas"
+        [class.fa-sort-asc]="query.isSortAscending"
+        [class.fa-sort-desc]="!query.isSortAscending"></i></th>
+      <th (click)="sortBy('contactName')">Contact Name<i *ngIf="query.sortBy === 'contactName'"
+        class="fas"
+        [class.fa-sort-asc]="query.isSortAscending"
+        [class.fa-sort-desc]="!query.isSortAscending"></i></th>
       <th>View</th>
     </tr>
   </thead>
   <tbody>
-    <!-- Add your vehicle data here -->
+
+    <!-- Add  vehicle data here -->
     <tr *ngFor="let vehicle of vehicles | paginate: {
       itemsPerPage: query.pageSize,
       currentPage: query.page,
@@ -47,10 +54,8 @@
       <td>{{vehicle.contact.name}}</td>
       <td><a href="/vehicles/{{vehicle.id}}">View</a></td>
     </tr>
-    <!-- Add more vehicle rows as needed -->
   </tbody>
 </table>
 
-<app-pagination 
-  
-  (pageChanged)="onPageChange($event)"></app-pagination>
+
+  <app-pagination (pageChanged)="onPageChange($event)"></app-pagination>

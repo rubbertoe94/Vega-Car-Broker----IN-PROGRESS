@@ -32,6 +32,10 @@ create(newVehicle: any): Observable<any> {
   return this.http.post<any>(this.vehicleEndpoint, newVehicle);
 }
 
+update(vehicle: any): Observable<any> {
+  return this.http.put<any>(this.vehicleEndpoint + '/' + vehicle.id, vehicle);
+}
+
 getVehicle(id: number): Observable<any> {
   let endpointUrl = this.baseUrl + '/vehicles/' + id;
   return this.http.get<any>(endpointUrl);

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { VehicleViewModel } from 'src/app/models/VehicleViewModels'; 
 import { KeyValuePair } from 'src/app/models/VehicleViewModels';
-import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -14,10 +13,12 @@ vehicles!: VehicleViewModel[];
 makes!: KeyValuePair[];
 query: any = {
   page: 1,
-  pageSize: 2
+  pageSize: 3
 };
 totalVehicles!: number;
 totalPages!: number;
+pageSizes: number[] = [3, 6, 9];
+
 
 
 
@@ -35,16 +36,12 @@ private populateVehicles() {
     this.vehicles = data.vehicles;
     this.totalVehicles = data.totalItems;
     this.totalPages = data.totalPages;
-
-  // console.log("vehicles: ", this.vehicles);
-  // console.log("totalItems: ", this.totalVehicles);
-  // console.log("totalPages: ", this.totalPages);
-  // console.log("query: ", this.query);
   });
   
 }
 
 onFilterChange() {
+  this.query.page = 1;
  this.populateVehicles();
 }
 
@@ -53,7 +50,7 @@ resetFilter() {
     page: this.query.page,
     pageSize: this.query.pageSize
   };
-  this.onFilterChange();
+  this.populateVehicles();
 }
 
 sortBy(columnName: string) {
@@ -67,9 +64,13 @@ sortBy(columnName: string) {
 }
 
 onPageChange(newPage: number) {
-  // console.log(`Changing to page ${newPage}`);
   this.query.page = newPage;
-  // console.log(`Updated query: `, this.query);
+  this.populateVehicles();
+}
+
+onPageSizeChange(newSize: any) {
+  this.query.pageSize = newSize.target.value;
+  this.query.page = 1;
   this.populateVehicles();
 }
 

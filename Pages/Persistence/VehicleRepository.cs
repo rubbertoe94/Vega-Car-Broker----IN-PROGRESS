@@ -86,5 +86,11 @@ namespace vega.Pages.Persistence
             context.Vehicles.Remove(vehicle);
         }
 
+        public void Update(Vehicle vehicle)
+        {
+            context.Attach(vehicle);
+            context.Entry(vehicle).State = EntityState.Modified;
+        }
+
     }
 }

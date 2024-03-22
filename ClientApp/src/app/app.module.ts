@@ -46,14 +46,14 @@ import { PaginationComponent } from './components/pagination/pagination.componen
       positionClass: 'toast-bottom-right',
     }),
     RouterModule.forRoot([
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'vehicles/all', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'vehicles/all', component: VehicleListComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: VehicleFormComponent },
-      { path: '**', redirectTo: 'home' }
+      { path: '**', redirectTo: 'vehicles/all' }
     ])
   ],
   providers: [

@@ -95,12 +95,19 @@ onFeatureToggle(featureId: number, $event: Event) {
 }
 
 submit() {
-  console.log(this.vehicle);
-  this.vehicleService.create(this.vehicle)
-    .subscribe(() => {
-      this.toastr.success('The vehicle was successfully created.', 'Success');
-      this.router.navigate(['/vehicles']);
-    });
+  if (this.vehicle.id) {
+    this.vehicleService.update(this.vehicle)
+      .subscribe(() => {
+        this.toastr.success('The vehicle was successfully updated.', 'Success');
+        this.router.navigate(['/vehicles']);
+      });
+  } else {
+    this.vehicleService.create(this.vehicle)
+      .subscribe(() => {
+        this.toastr.success('The vehicle was successfully created.', 'Success');
+        this.router.navigate(['/vehicles']);
+      });
+  }
 }
 
 
