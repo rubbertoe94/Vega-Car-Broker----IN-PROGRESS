@@ -20,6 +20,7 @@ import { AppErrorHandler } from './app.error-handler';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ViewVehicleComponent } from './components/vehicle-view/vehicle-view.component';
+import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -42,6 +43,8 @@ import { ViewVehicleComponent } from './components/vehicle-view/vehicle-view.com
     NgxPaginationModule,
     HttpClientModule,
     FormsModule,
+    NgbModule,
+    NgbNavModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 5000,

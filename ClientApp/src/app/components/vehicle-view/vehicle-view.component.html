@@ -1,44 +1,41 @@
 <h1>Vehicle</h1>
-<div>
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Vehicle</a></li>
-    <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Photos</a></li>
+<div *ngIf="vehicle">
+  <!-- Bootstrap 5 nav tabs with ng-bootstrap -->
+  <ul ngbNav #nav="ngbNav" class="nav-tabs" role="tablist">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Vehicle</a>
+      <ng-template ngbNavContent>
+        <h2>Basics</h2>
+        <ul>
+          <li>Make: {{ vehicle.make.name }}</li>
+          <li>Model: {{ vehicle.model.name }}</li>
+          <li>Registered: {{ vehicle.isRegistered ? 'Yes' : 'No' }}</li>
+        </ul>
+        <h2>Features</h2>
+        <ul>
+          <li *ngFor="let f of vehicle.features">{{ f.name }}</li>
+        </ul>
+        <h2>Contact</h2>
+        <ul>
+          <li>Contact Name: {{ vehicle.contact.name }}</li>
+          <li>Contact Phone: {{ vehicle.contact.phone }}</li>
+          <li>Contact Email: {{ vehicle.contact.email }}</li>
+        </ul>
+        <br/>
+        <p>
+          <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
+          <button class="btn btn-danger" (click)="delete()">Delete</button>
+          <a class="btn btn-secondary" [routerLink]="['/vehicles']">View All Vehicles</a>
+        </p>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Photos</a>
+      <ng-template ngbNavContent>
+        <h2>Photos</h2>
+        <!-- Photos content goes here -->
+      </ng-template>
+    </li>
   </ul>
-
-  <!-- Tab panes -->
-  <div class="tab-content" *ngIf="vehicle">
-    <!-- Vehicle tab -->
-    <div role="tabpanel" class="tab-pane active" id="basic">
-      <h2>Basics</h2>
-      <ul>
-        <li>Make: {{ vehicle.make.name }}</li>
-        <li>Model: {{ vehicle.model.name }}</li>
-        <li>Registered: {{ vehicle.isRegistered ? 'Yes' : 'No' }}
-      </ul>
-      <h2>Features</h2>
-      <ul>
-        <li *ngFor="let f of vehicle.features">{{ f.name }}</li>
-      </ul>
-      <h2>Contact</h2>
-      <ul>
-        <li>Contact Name: {{ vehicle.contact.name }}</li>
-        <li>Contact Phone: {{ vehicle.contact.phone }}</li>
-        <li>Contact Email: {{ vehicle.contact.email }}</li>
-      </ul>
-      <br/>
-      <p>
-        <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
-        <button class="btn btn-danger" (click)="delete()">Delete</button>
-        <a class="btn btn-secondary" [routerLink]="['/vehicles']">View All Vehicles</a>
-      </p>
-    </div>
-    <!-- Photos tab -->
-    <div role="tabpanel" class="tab-pane" id="photos">
-      <h2>Photos</h2>
-    </div>
-  </div>
+  <div [ngbNavOutlet]="nav" class="tab-content"></div>
 </div>
-
-
