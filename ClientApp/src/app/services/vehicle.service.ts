@@ -61,7 +61,9 @@ toQueryString(obj: any) {
   return parts.join('&');
 }
 
-
+delete(id: number): Observable<any> {
+  return this.http.delete<any>(this.vehicleEndpoint + '/' + id);
+}
 
 
 }

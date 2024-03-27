@@ -19,6 +19,7 @@ import { AppErrorHandler } from './app.error-handler';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { ViewVehicleComponent } from './components/vehicle-view/vehicle-view.component';
 
 
 
@@ -33,7 +34,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     FetchDataComponent,
     VehicleFormComponent,
     VehicleListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ViewVehicleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,13 +48,14 @@ import { PaginationComponent } from './components/pagination/pagination.componen
       positionClass: 'toast-bottom-right',
     }),
     RouterModule.forRoot([
-      { path: '', redirectTo: 'vehicles/all', pathMatch: 'full' },
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'vehicles/all', component: VehicleListComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
-      { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: '**', redirectTo: 'vehicles/all' }
     ])
   ],
