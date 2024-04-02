@@ -11,6 +11,8 @@ namespace vega.Models.ViewModels
         {
             //domain to api resource
 
+            CreateMap<Photo, PhotoViewModel>()
+                .ReverseMap();
             CreateMap<Make, MakeViewModel>()
                 .ReverseMap();
             CreateMap<Make, KeyValuePairViewModel>()

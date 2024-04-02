@@ -2,6 +2,7 @@ using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using vega.Core.Interfaces;
+using vega.Core.Models;
 using vega.Pages.Persistence;
 using vega.Pages.Persistence.Interfaces;
 using vega.Persistence;
@@ -12,6 +13,8 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.Configure<PhotoSettings>(builder.Configuration.GetSection("PhotoSettings"));
 
 // Add services to the container.
 builder.Services.AddDbContext<VegaDbContext>(options =>
