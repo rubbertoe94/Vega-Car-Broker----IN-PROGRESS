@@ -33,7 +33,7 @@
       <a ngbNavLink>Photos</a>
       <ng-template ngbNavContent>
         <h2>Photos</h2>
-        <!-- Photos content goes here -->
+        <input type="file" (change)="uploadPhoto()" #fileInput />
       </ng-template>
     </li>
   </ul>

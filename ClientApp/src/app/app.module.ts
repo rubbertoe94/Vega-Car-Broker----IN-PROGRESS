@@ -21,6 +21,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ViewVehicleComponent } from './components/vehicle-view/vehicle-view.component';
 import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { PhotoService } from './services/photo.service';
 
 
 
@@ -64,6 +65,7 @@ import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [
     VehicleService, 
+    PhotoService,
   { provide: ErrorHandler, useClass: AppErrorHandler }
 ],
   

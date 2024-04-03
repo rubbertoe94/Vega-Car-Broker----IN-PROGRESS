@@ -39,29 +39,30 @@ namespace vega.Controllers
             if (!photoSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type");
 
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
-            if (!Directory.Exists(uploadsFolderPath)) 
-            { 
+            if (!Directory.Exists(uploadsFolderPath))
+            {
                 Directory.CreateDirectory(uploadsFolderPath);
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var filePath = Path.Combine(uploadsFolderPath, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                   await file.CopyToAsync(stream);
-                }
-
-                // INSERT code to generate a thumbnail for the user to see
-
-
-                //update database
-                var photo = new Photo { FileName = fileName };
-                vehicle.Photos.Add(photo);
-                await unitOfWork.CompleteAsync();
-
-                return Ok(mapper.Map<Photo, PhotoViewModel>(photo));
             }
-            return BadRequest();
+
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(uploadsFolderPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // INSERT code to generate a thumbnail for the user to see
+
+            //update database
+            var photo = new Photo { FileName = fileName };
+            vehicle.Photos.Add(photo);
+            await unitOfWork.CompleteAsync();
+
+            return Ok(mapper.Map<Photo, PhotoViewModel>(photo));
+
+                }
             }
         }   
-    }
+    
 
