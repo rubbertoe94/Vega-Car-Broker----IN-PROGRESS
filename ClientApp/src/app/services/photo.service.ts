@@ -12,6 +12,10 @@ export class PhotoService {
     constructor(private http: HttpClient) {}
 
 
+    getPhotos(vehicleId: number) {
+        return this.http.get(this.vehicleEndpoint + `/${vehicleId}/photos`);
+    }
+
     upload(vehicleId: number, photo: any) {
         var formData = new FormData();
         formData.append('file', photo); //paramater name in the controller API is 'file', so it must be the same in the first argument of the append method

@@ -16,16 +16,28 @@ namespace vega.Controllers
         private readonly IVehicleRepository repository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IPhotoRepository photoRepository;
         private readonly PhotoSettings photoSettings;
 
-        public PhotosController(IWebHostEnvironment host, IVehicleRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
+        public PhotosController(IWebHostEnvironment host, IVehicleRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options, IPhotoRepository photoRepository)
         {
             this.host = host;
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.photoRepository = photoRepository;
             this.photoSettings = options.Value;
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<PhotoViewModel>> GetPhotos(int vehicleId)
+        {
+            var photos = await photoRepository.GetPhotos(vehicleId);
+            return mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoViewModel>>(photos);
+        }
+
+
+
         [HttpPost]
         public async Task<ActionResult> Upload(int vehicleId, IFormFile file) //use IFormCollection to get multiple files
         {
@@ -52,8 +64,6 @@ namespace vega.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            // INSERT code to generate a thumbnail for the user to see
-
             //update database
             var photo = new Photo { FileName = fileName };
             vehicle.Photos.Add(photo);
@@ -62,6 +72,14 @@ namespace vega.Controllers
             return Ok(mapper.Map<Photo, PhotoViewModel>(photo));
 
                 }
+
+        
+
+
+
+
+
+
             }
         }   
     

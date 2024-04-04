@@ -34,6 +34,7 @@
       <ng-template ngbNavContent>
         <h2>Photos</h2>
         <input type="file" (change)="uploadPhoto()" #fileInput />
+        <img *ngFor="let photo of photos" src="/uploads/{{ photo.fileName }}" class="img-thumbnail" />
       </ng-template>
     </li>
   </ul>
